@@ -1,5 +1,14 @@
 <h1>Editing Book</h1>
 
+<% if @book.errors.any? %>
+<%= @book.errors.count %>error
+<ul>
+<% @book.errors.full_messages.each do |message| %>
+<il><%= message %></il>
+<% end %>
+</ul>
+<% end %>
+
 <%= form_with model: @book, url: update_book_path(@book.id), method: :patch, local:true do |f| %>
 
 <h4>Title</h4>
@@ -8,10 +17,9 @@
 <h4>Body</h4>
 <%= f.text_area :body %>
 
-<%= f.submit 'Update Bookk' %>
-
+<%= f.submit 'Update Book' %>
 <% end %>
 
-<a href="/books/:id/show">Show</a>
+<%=link_to "Show", book_path(@book.id) %>
 "|"
 <a href="/books">Back</a>

@@ -1,20 +1,39 @@
 <h1>Books</h1>
 
-<% @books.each do |book| %>
-
-<P>title</P>
-<span><%= book.title %></span>
-
-<p>body</p>
-<span><%= book.body %></span>
-
-<a href="/books/:id/show">Show</a>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+　<% @books.each do |book| %>
+  <tbody>
+    <tr>
+    <td><span><%= book.title %></span></td>
+    <td><span><%= book.body %></span></td>
+    <td><%= link_to "Show", "/books/#{book.id}" %></td>
+    <td><%= link_to "Edit", "/books/#{book.id}/edit" %></td>
+    <td><%= link_to "Destroy", "/books/#{book.id}", method: :delete, "data-confirm" => "Are you sure？" %></td>
+    </tr>
 
 <% end %>
 
+</table>
+
 <h2>New book</h2>
 
-<%= form_with model: @book, url:'books', method: :post, local:true do |f| %>
+<% if @book.errors.any? %>
+<%= @book.errors.count %>errors
+<ul>
+<% @book.errors.full_messages.each do |message| %>
+<il><%= message %></il>
+<% end %>
+</ul>
+<% end %>
+
+<%= form_with model: @book, url:'/books', method: :post, local:true do |f| %>
 <h4>Title</h4>
 <%= f.text_field :title %>
 
